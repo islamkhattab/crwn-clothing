@@ -1,9 +1,6 @@
-import { useEffect, useState, useContext } from "react";
-import { getRedirectResult } from "firebase/auth";
+import { useState } from "react";
 import {
-  auth,
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
@@ -25,7 +22,7 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(
+      await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
