@@ -10,8 +10,6 @@ import {
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
-import { UserContext } from "../../contexts/user.context";
-
 import "./sign-in-form.styles.scss";
 
 const defaultFormFields = {
@@ -23,18 +21,6 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  const { setCurrectUser } = useContext(UserContext);
-
-  useEffect(() => {
-    const getRedirectResponse = async () => {
-      const response = await getRedirectResult(auth);
-      if (response) {
-        await createUserDocumentFromAuth(response.user);
-      }
-    };
-    getRedirectResponse();
-  }, []);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -43,8 +29,6 @@ const SignInForm = () => {
         email,
         password
       );
-      
-      setCurrectUser(user);
       
       resetFormFields();
     } catch (error) {
@@ -71,9 +55,7 @@ const SignInForm = () => {
   };
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
-    setCurrectUser(user);
+    await signInWithGooglePopup();
   };
 
   return (
